@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Job Application Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<script>
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user || !user.loggedIn) {
+   window.location.href = "login.html";
+
+  }
+</script>
+
+<!-- Confirm Popup -->
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <h3>Confirmation</h3>
+    <p>Do you want to know the status of this job?</p>
+
+    <button onclick="confirmYes()">Yes</button>
+    <button onclick="confirmNo()" style="margin-left:10px">No</button>
+  </div>
+</div>
+
+
+<body>
+
+  <header>
+      <button onclick="logout()" class="logout-btn">Logout</button>
+
+    <h1>Smart Job Application Tracker</h1>
+    <div class="welcome">
+  <h2 id="welcomeMsg"></h2>
+  <p class="sub-text">Track and manage your job applications</p>
+
+</div>
+  </header>
+
+  <section class="stats">
+    <div class="card">Total: <span id="total">0</span></div>
+    <div class="card">Interview: <span id="interview">0</span></div>
+    <div class="card">Offer: <span id="offer">0</span></div>
+    <div class="card">Rejected: <span id="rejected">0</span></div>
+  </section>
+
+  <section class="form-section">
+<select id="company" onchange="updateRoles()">
+  <option value="">Select Company</option>
+    <option>Surge</option>
+  <option>Google</option>
+  <option>Amazon</option>
+  <option>Microsoft</option>
+  <option>TCS</option>
+  <option>Infosys</option>
+  <option>Wipro</option>
+</select>
+
+<select id="role">
+  <option value="">Select Role</option>
+</select>
+    <select id="status">
+      <option value="">Select Status</option>
+      <option>Applied</option>
+      <option>Interview</option>
+      <option>Offer</option>
+      <option>Rejected</option>
+    </select>
+    <!--Date-->
+    <input type="date" id="appliedDate" required>
+
+    <button onclick="addJob()">Add Job</button>
+  </section>
+
+<!-- autocomplete="off" onfocus="showSearchPopup()"
+    onblur="hideSearchPopup()"
+    <div class="search-wrapper"> -->
+
+  <input type="text" id="search" placeholder="Search by company or role"  onkeyup="searchJobs()">
+
+ <!-- <div id="searchPopup" class="popup">
+      Search using company name
+  </div>  -->
+
+
+<select id="filterStatus" onchange="searchJobs()">
+  <option value="">All Status</option>
+  <option>Applied</option>
+  <option>Interview</option>
+  <option>Offer</option>
+  <option>Rejected</option>
+</select>
+<!-- </div>  -->
+<br><br>
+  <section id="jobList"></section>
+
+<div class="chart-container">
+  <canvas id="statusChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+<div id="jobModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+
+    <h2 id="modalCompany"></h2>
+    <p><strong>Role:</strong> <span id="modalRole"></span></p>
+
+    <p><strong>Applied Date:</strong> <span id="modalDate"></span></p>
+
+    <label>Status:</label>
+    <select id="modalStatus">
+      <option>Applied</option>
+      <option>Interview</option>
+      <option>Offer</option>
+      <option>Rejected</option>
+    </select>
+    <br><br>
+    <!--Note -->
+<label>Notes:</label>
+<textarea
+  id="modalNotes"
+  rows="4"
+  placeholder="Write notes about this job..."
+></textarea>
+
+    <br><br>
+    <button onclick="updateStatus()">Update</button>
+    <button onclick="deleteJob()" style="background:red;color:white">Delete</button>
+  </div>
+</div>
+
+
+</html>
