@@ -6,6 +6,7 @@ function login() {
   const validName = "Sindhu";
   const validPassword = "1234";
 
+
   if (!name || !password) {
     alert("Please enter name and password");
     return;
